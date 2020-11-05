@@ -47,8 +47,8 @@ Cut-off Date: Null
 
 RegCode: RX
 Description: Repeat examinations only - No Tuition
-Access Required: No
-Cut-off Date: Null
+Access Required: Maybe
+Cut-off Date: Yes, discretionary
 
 RegCode: WD
 Description: Withdrawn - Student no longer attending and officially withdrawn
