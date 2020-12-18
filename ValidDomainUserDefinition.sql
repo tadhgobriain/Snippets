@@ -42,7 +42,7 @@ Cut-off Date: Null
 
 RegCode: QX
 Description: Qualifier Examinations only - No Tuition
-Access Required: No
+Access Required: Yes (to be reviewed)
 Cut-off Date: Null
 
 RegCode: RX
@@ -65,7 +65,7 @@ SELECT ID AS SamAccountName, TO_CHAR(BIRTHDATE, 'DDMonYY') AS PASSWORD, FIRSTNAM
         AND NOT (PROGRAMME = 'TA_SCPHA_B' AND YEARATT LIKE 'P%')  
 
 /* What regcodes are valid before/after cut-off date?  */
-		AND (((REGCODE = 'QP' OR REGCODE = 'RG' OR REGCODE = 'RP' OR REGCODE = 'TR' OR REGCODE = 'EL') 
+		AND (((REGCODE = 'QX' OR REGCODE = 'QP' OR REGCODE = 'RG' OR REGCODE = 'RP' OR REGCODE = 'TR' OR REGCODE = 'EL') 
 		        OR (YEARATT LIKE 'Y%' AND REGCODE = 'EL' AND TRUNC(SYSDATE) >= TO_DATE('01SEP2019') AND TRUNC(SYSDATE) <= TO_DATE('01SEP2021')))
 
   		    OR (REGCODE = 'RX' AND TRUNC(SYSDATE) < TO_DATE('07SEP2020'))
