@@ -62,6 +62,11 @@ SELECT ID AS SamAccountName, TO_CHAR(BIRTHDATE, 'DDMonYY') AS PASSWORD, FIRSTNAM
     FROM ITT_STUDENT 
                 
     WHERE (PROGRAMME LIKE 'TA_K%' OR PROGRAMME LIKE 'TA_S%' OR PROGRAMME LIKE 'FS_S%')
+    	/* 
+	'TA_SCPHA_B' students are registered FT in a partner institution, attending as 'Y4' in our institution only.
+	They are registed as P1|P2|P3 for administration purposes only, but do not get an AD account
+	for reasons such as GDPR adherence, licence consumption, security(least privilege).
+	*/
         AND NOT (PROGRAMME = 'TA_SCPHA_B' AND YEARATT LIKE 'P%')  
 
 /* What regcodes are valid before/after cut-off date?  */
