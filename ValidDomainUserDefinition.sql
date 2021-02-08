@@ -69,9 +69,11 @@ SELECT ID AS SamAccountName, TO_CHAR(BIRTHDATE, 'DDMonYY') AS PASSWORD, FIRSTNAM
         AND NOT (PROGRAMME = 'TA_SCPHA_B' AND YEARATT LIKE 'P%')  
 /* What regcodes are valid before/after regcode cut-off date?  */
 	AND ((REGCODE IN ('QX','QP','RG','RP','TR')
-	      OR ( /* YEARATT LIKE 'Y%' AND */ REGCODE = 'EL' AND TRUNC(SYSDATE) >= TO_DATE('01SEP2020') AND TRUNC(SYSDATE) < TO_DATE('09FEB2021')))
-	    OR (REGCODE = 'RX' AND TRUNC(SYSDATE) < TO_DATE('07SEP2021'))
-	  OR REGCODE = 'W%')
+	      	OR ( /* YEARATT LIKE 'Y%' AND */ REGCODE = 'EL' AND TRUNC(SYSDATE) >= TO_DATE('01SEP2020') AND TRUNC(SYSDATE) < TO_DATE('09FEB2021')))
+	      /* Students resitting exams are valid until a specific discretionary date  */  
+	      OR (REGCODE = 'RX' AND TRUNC(SYSDATE) < TO_DATE('07SEP2021'))
+            /* Research students writing up are always valid */ 
+            OR REGCODE = 'W%')
 			    
 /* What is the academic year cut-off date? */  
         AND (((TERM = '202000' OR TERM = '201900') AND TRUNC(SYSDATE) >= TO_DATE('01SEP2020') AND TRUNC(SYSDATE) <= TO_DATE('28FEB2021'))
