@@ -66,12 +66,15 @@ SELECT ID AS SamAccountName, TO_CHAR(BIRTHDATE, 'DDMonYY') AS PASSWORD, FIRSTNAM
         They are registered as P1|P2|P3 for administration purposes only, but do not get an AD account
         for reasons such as GDPR adherence, licence consumption, security(least privilege).
         */
-        AND NOT (PROGRAMME = 'TA_SCPHA_B' AND YEARATT LIKE 'P%')  
-/* What regcodes are valid before/after regcode cut-off date?  */
+        AND NOT (PROGRAMME = 'TA_SCPHA_B' AND YEARATT LIKE 'P%')
+	
+	/* What regcodes are valid before/after regcode cut-off date?  */
 	AND ((REGCODE IN ('QX','QP','RG','RP','TR')
 	      	OR ( /* YEARATT LIKE 'Y%' AND */ REGCODE = 'EL' AND TRUNC(SYSDATE) >= TO_DATE('01SEP2020') AND TRUNC(SYSDATE) < TO_DATE('09FEB2021')))
+																	
 	      /* Students resitting exams are valid until a specific discretionary date  */  
 	      OR (REGCODE = 'RX' AND TRUNC(SYSDATE) < TO_DATE('07SEP2021'))
+							      
             /* Research students writing up are always valid */ 
             OR REGCODE = 'W%')
 			    
