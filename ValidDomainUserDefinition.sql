@@ -58,29 +58,25 @@ Cut-off Date: Null
  */
 
 SELECT ID AS SamAccountName, TO_CHAR(BIRTHDATE, 'DDMonYY') AS PASSWORD, FIRSTNAME, LASTNAME, YEARATT, PROGRAMME, REGCODE, ACCOUNT_ACTION, SUBSTR(TERM,1,4) AS TERM
-
     FROM ITT_STUDENT 
                 
     WHERE (PROGRAMME LIKE 'TA_K%' OR PROGRAMME LIKE 'TA_S%' OR PROGRAMME LIKE 'FS_S%')
-    	/* 
-	'TA_SCPHA_B' students are registered FT in a partner institution, attending as 'Y4' in our institution only.
-	They are registed as P1|P2|P3 for administration purposes only, but do not get an AD account
-	for reasons such as GDPR adherence, licence consumption, security(least privilege).
-	*/
+        /* 
+        'TA_SCPHA_B' students are registered FT in a partner institution, attending as 'Y4' in our institution only.
+        They are registered as P1|P2|P3 for administration purposes only, but do not get an AD account
+        for reasons such as GDPR adherence, licence consumption, security(least privilege).
+        */
         AND NOT (PROGRAMME = 'TA_SCPHA_B' AND YEARATT LIKE 'P%')  
-
 /* What regcodes are valid before/after cut-off date?  */
-		AND (((REGCODE = 'QX' OR REGCODE = 'QP' OR REGCODE = 'RG' OR REGCODE = 'RP' OR REGCODE = 'TR' OR REGCODE = 'EL') 
-		        OR (YEARATT LIKE 'Y%' AND REGCODE = 'EL' AND TRUNC(SYSDATE) >= TO_DATE('01SEP2019') AND TRUNC(SYSDATE) <= TO_DATE('01SEP2021')))
-
-  		    OR (REGCODE = 'RX' AND TRUNC(SYSDATE) < TO_DATE('07SEP2020'))
-
+		AND (((REGCODE = 'QX' OR REGCODE = 'QP' OR REGCODE = 'RG' OR REGCODE = 'RP' OR REGCODE = 'TR') 
+		        OR (YEARATT LIKE 'Y%' AND REGCODE = 'EL' AND TRUNC(SYSDATE) >= TO_DATE('01SEP2020') AND TRUNC(SYSDATE) < TO_DATE('08FEB2021')))
+  		    OR (REGCODE = 'RX' AND TRUNC(SYSDATE) < TO_DATE('07SEP2021'))
   			OR REGCODE = 'W%')
 			    
-/* What are the cut-off dates?   */ 
-        AND (((TERM = '202000' OR TERM = '201900') AND TRUNC(SYSDATE) >= TO_DATE('01SEP2019') AND TRUNC(SYSDATE) <= TO_DATE('01SEP2021'))
-    		OR (TERM = '202000' AND TRUNC(SYSDATE) > TO_DATE('01DEC2020'))) 
-               
+/* What are the academic year cut-off dates? */   
+        AND (((TERM = '202000' OR TERM = '201900') AND TRUNC(SYSDATE) >= TO_DATE('01SEP2020') AND TRUNC(SYSDATE) <= TO_DATE('28FEB2021'))
+    		OR (TERM = '202000' AND TRUNC(SYSDATE) > TO_DATE('28FEB2021')))  
+                      
             AND REGEXP_LIKE (ID, '^x[0-9]{8}$','i')
                 
             AND BIRTHDATE IS NOT NULL
