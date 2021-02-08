@@ -67,13 +67,13 @@ SELECT ID AS SamAccountName, TO_CHAR(BIRTHDATE, 'DDMonYY') AS PASSWORD, FIRSTNAM
         for reasons such as GDPR adherence, licence consumption, security(least privilege).
         */
         AND NOT (PROGRAMME = 'TA_SCPHA_B' AND YEARATT LIKE 'P%')  
-/* What regcodes are valid before/after cut-off date?  */
+/* What regcodes are valid before/after regcode cut-off date?  */
 		AND (((REGCODE = 'QX' OR REGCODE = 'QP' OR REGCODE = 'RG' OR REGCODE = 'RP' OR REGCODE = 'TR') 
 		        OR (YEARATT LIKE 'Y%' AND REGCODE = 'EL' AND TRUNC(SYSDATE) >= TO_DATE('01SEP2020') AND TRUNC(SYSDATE) < TO_DATE('08FEB2021')))
   		    OR (REGCODE = 'RX' AND TRUNC(SYSDATE) < TO_DATE('07SEP2021'))
   			OR REGCODE = 'W%')
 			    
-/* What are the academic year cut-off dates? */   
+/* What is the academic year cut-off date? */  
         AND (((TERM = '202000' OR TERM = '201900') AND TRUNC(SYSDATE) >= TO_DATE('01SEP2020') AND TRUNC(SYSDATE) <= TO_DATE('28FEB2021'))
     		OR (TERM = '202000' AND TRUNC(SYSDATE) > TO_DATE('28FEB2021')))  
                       
