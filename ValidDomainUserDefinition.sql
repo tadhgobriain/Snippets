@@ -79,6 +79,11 @@ SELECT ID AS SamAccountName, TO_CHAR(BIRTHDATE, 'DDMonYY') AS PASSWORD, FIRSTNAM
         AND (((TERM = '202000' OR TERM = '201900') AND TRUNC(SYSDATE) >= TO_DATE('01SEP2020') AND TRUNC(SYSDATE) <= TO_DATE('28FEB2021'))
     		OR (TERM = '202000' AND TRUNC(SYSDATE) > TO_DATE('28FEB2021')))  
                       
-            AND REGEXP_LIKE (ID, '^x[0-9]{8}$','i')
-                
-            AND BIRTHDATE IS NOT NULL
+    	/* Filter out invalid student IDs */                       
+   	AND REGEXP_LIKE (ID, '^x[0-9]{8}$','i')
+								 
+   	/* Filter out blank date of births */ 
+   	AND BIRTHDATE IS NOT NULL
+								 
+   	/* Filter out invalid students */ 
+   	AND NOT (FIRSTNAME = 'DO NOT USE') ;
